@@ -1,0 +1,30 @@
+version: '3.9'
+services :
+  db: 
+    image: postgres:16
+    container_name: barcode-db
+    environment: 
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABSE}
+    ports:
+      - "${PGPORT}:5432"
+    volumes: 
+      - postgres-data:/var/lib/postgresql/data
+    networks: 
+      - barcode-network  
+
+  adminer:
+    image: adminer
+    container_name: adminer_barcode   
+    ports:
+      - "8021:8080" 
+    networks: 
+      - barcode-network  
+
+volumes:
+  postgres-data:
+
+networks:
+  barcode-network:
+    driver: bridge
